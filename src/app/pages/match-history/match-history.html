@@ -1,0 +1,46 @@
+<div class="leaderboard-bg">
+
+  <img
+    src="assets/boot_back.png"
+    class="back-img"
+    (click)="goToBack()" />
+
+  <h1 class="title">History</h1> 
+ 
+  <table *ngIf="results().length > 0" class="leaderboard-table">
+
+  <thead>
+    <tr>
+      <th>Match</th>
+      <th>Predicted Score</th>
+      <th>Actual Score</th>
+      <th>Points</th>
+    </tr>
+  </thead>
+
+  <tbody>
+
+    <tr *ngFor="let r of results()">
+      <td>
+        {{ r.teamA }}
+        vs
+        {{ r.teamB }}
+      </td>
+      <td>
+        {{ r.predictedA }} - {{ r.predictedB }}
+      </td>
+      <td>
+        {{ r.actualA }} - {{ r.actualB }}
+      </td>
+
+      <td [ngClass]="r.isCorrect ? 'correct' : 'wrong'">
+        {{ r.points }}
+      </td>
+
+    </tr>
+
+  </tbody> 
+
+</table>
+
+</div>

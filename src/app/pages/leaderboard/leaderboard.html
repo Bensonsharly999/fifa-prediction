@@ -1,0 +1,47 @@
+<div class="leaderboard-bg">
+
+  <!-- Back button -->
+  <img
+    src="assets/boot_back.png"
+    class="back-img"
+    (click)="goToBack()"
+  />
+
+  <!-- Page title -->
+  <h1 class="title">🏆 Top Scorer</h1>
+
+  <!-- Scroll Wrapper -->
+<div class="table-container" *ngIf="leaderboard().length > 0">
+
+  <table class="leaderboard-table">
+
+    <thead>
+      <tr>
+        <th>Rank</th>
+        <th>Employee ID</th>
+        <th>Points</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let p of leaderboard(); let i = index">
+
+        <td>
+          <span *ngIf="i === 0">🥇</span>
+          <span *ngIf="i === 1">🥈</span>
+          <span *ngIf="i === 2">🥉</span>
+          <span *ngIf="i > 2">{{ i + 1 }}</span>
+        </td>
+
+        <td>{{ p.id }}</td>
+        <td>{{ p.points }}</td>
+
+      </tr>
+    </tbody>
+
+  </table>
+
+</div>
+
+
+</div>

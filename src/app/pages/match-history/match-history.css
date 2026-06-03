@@ -1,0 +1,196 @@
+/* ============================= */
+/* Background Section */
+/* ============================= */
+.leaderboard-bg {
+  position: fixed;
+  inset: 0;
+
+  background: url('/assets/bg.jpg') no-repeat center center;
+  background-size: cover;
+
+  text-align: center;
+  color: white;
+
+  overflow-y: auto;  /* enables page scroll */
+}
+
+/* Dark overlay for readability */
+.leaderboard-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background: rgba(0, 0, 0, 0.6);
+
+  pointer-events: none; /* prevents blocking scroll/click */
+}
+
+/* ============================= */
+/* Title */
+/* ============================= */
+.title {
+  position: relative; /* required for overlay */
+
+  font-size: 48px;
+  font-weight: bold;
+
+  margin-top: 40px;
+  margin-bottom: 30px;
+
+  color: white;
+
+  text-shadow:
+    0 0 10px white,
+    0 0 20px rgba(255, 215, 0, 0.7);
+}
+
+/* ============================= */
+/* Leaderboard Table */
+/* ============================= */
+.leaderboard-table {
+  width: 70%;
+  margin: auto;
+  position: relative;
+
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(2px);
+
+  border-radius: 15px;
+  overflow: hidden;
+
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
+
+  border-collapse: collapse;
+}
+
+/* ============================= */
+/* Table Header */
+/* ============================= */
+.leaderboard-table th {
+  padding: 15px;
+  font-size: 18px;
+
+  background: linear-gradient(135deg, gold, #ffd700);
+
+  color: black;
+  font-weight: bold;
+}
+
+/* ============================= */
+/* Table Rows */
+/* ============================= */
+.leaderboard-table td {
+  padding: 14px;
+  font-size: 17px;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+
+  text-shadow: 0 0 5px black;
+}
+
+.leaderboard-table tr {
+  transition: 0.3s;
+}
+
+.leaderboard-table tr:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: scale(1.02);
+}
+
+/* ============================= */
+/* Top 3 Styling */
+/* ============================= */
+/* .leaderboard-table tr:nth-child(2) td {
+  color: gold;
+  font-weight: bold;
+}
+
+.leaderboard-table tr:nth-child(3) td {
+  color: silver;
+}
+
+.leaderboard-table tr:nth-child(4) td {
+  color: #cd7f32;
+} */
+
+/* Medal icon size */
+td span {
+  font-size: 24px;
+}
+
+/* ============================= */
+/* Back Button Image */
+/* ============================= */
+.back-img {
+  position: fixed;
+  top: 10px;
+  left: -10px;
+
+  width: 130px;
+
+  cursor: pointer;
+
+  transform: perspective(800px) rotateY(-20deg);
+  transition: 0.3s ease;
+
+  z-index: 10;
+}
+
+.back-img:hover {
+  transform: perspective(800px) rotateY(-20deg) scale(1.1);
+}
+
+/* ============================= */
+/* Back Button (Optional) */
+/* ============================= */
+.back-btn {
+  position: fixed;
+  top: 50px;
+  left: 0;
+
+  padding: 12px 20px;
+
+  background: linear-gradient(135deg, gold, #ffd700);
+
+  color: black;
+  font-weight: bold;
+
+  border-radius: 0 12px 12px 0;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 0 10px gold,
+    0 0 20px rgba(255, 215, 0, 0.6);
+
+  transition: all 0.3s ease;
+
+  z-index: 10;
+}
+
+/* ============================= */
+/* Scroll Container */
+/* ============================= */
+.table-container {
+  max-height: 700px;
+  overflow-y: auto; /* enables vertical scroll */
+  padding-right: 2px;
+}
+
+/* Scrollbar styling */
+.table-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.table-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, gold, #c9a400);
+  border-radius: 10px;
+}
+
+.table-container::-webkit-scrollbar-thumb:hover {
+  background: #ffd700;
+}

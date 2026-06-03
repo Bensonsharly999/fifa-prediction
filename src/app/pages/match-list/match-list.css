@@ -1,0 +1,400 @@
+/* ============================= */
+/*  Background Section */
+/* ============================= */
+.bg {
+  background: url('/assets/bg.webp') no-repeat center;
+  background-size: cover;
+
+  min-height: 96vh;
+  padding: 2px;
+
+  color: white;
+  text-align: center;
+}
+
+/* ============================= */
+/*  Match Card Layout */
+/* ============================= */
+.card {
+  display: grid;
+  grid-template-columns: 1fr 130px 1fr; /* fixed center column */
+  align-items: center;
+
+  max-width: 600px;
+  margin: 10px auto;
+  padding: 10px;
+
+  border-radius: 12px;
+
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  background: rgba(0, 0, 0, 0.8);
+  border: 1px solid gold;
+  box-shadow:
+    0 0 10px gold,
+    0 0 20px rgba(255,215,0,0.6);
+}
+
+/* ============================= */
+/* Center Section (VS + Time) */
+/* ============================= */
+.center-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: 130px;
+  text-align: center;
+}
+
+.vs {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.time {
+  font-size: 14px;
+  font-weight: bold;
+  margin-top: 4px;
+}
+
+/* ============================= */
+/* Team Section */
+/* ============================= */
+.team {
+  text-align: center;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.team img {
+  width: 70px;
+  height: 50px;
+  object-fit: contain;
+}
+
+/* ============================= */
+/* Title */
+/* ============================= */
+.title {
+  font-size: 42px;
+  font-weight: bold;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+
+  color: gold;
+
+  text-shadow:
+    2px 2px 10px rgba(0,0,0,0.9),
+    0 0 10px rgba(0,0,0,0.8);
+}
+
+/* ============================= */
+/*  Animated Ball */
+/* ============================= */
+.ball {
+  width: 40px;
+  height: 40px;
+
+  display: inline-block;
+  cursor: pointer;
+
+  background: url('/assets/football.png') no-repeat center;
+  background-size: contain;
+}
+
+/* animation */
+.ball.animate {
+  animation: roll 7s linear;
+}
+
+@keyframes roll {
+  0% {
+    transform: translateX(0px) rotate(0deg);
+  }
+  100% {
+    transform: translateX(400px) rotate(1080deg);
+  }
+}
+
+/* ============================= */
+/* Players (Left + Right) */
+/* ============================= */
+.player-left {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+
+  width: 280px;
+  max-height: 80vh;
+
+  z-index: 1;
+  transition: all 0.3s ease;
+}
+
+.player-right {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+
+  width: 180px;
+  max-height: 80vh;
+
+  transform: scaleX(-1);
+  z-index: 1;
+  transition: all 0.3s ease;
+}
+
+/* hover effects */
+.player-left:hover {
+  transform: scale(1.2);
+
+  filter:
+    brightness(1.2)
+    contrast(1.2)
+    drop-shadow(0 0 8px gold)
+    drop-shadow(0 0 18px rgba(255, 215, 0, 0.9))
+    drop-shadow(0 0 30px rgba(255, 215, 0, 0.7));
+
+  z-index: 5;
+}
+
+.player-right:hover {
+  transform: scaleX(-1) scale(1.2);
+
+  filter:
+    drop-shadow(0 0 10px gold)
+    drop-shadow(0 0 20px rgba(255, 215, 0, 0.8));
+
+  z-index: 5;
+}
+
+/* ============================= */
+/* Bottom Moving Ball */
+/* ============================= */
+.bottom-ball {
+  position: fixed;
+  bottom: 20px;
+  left: 250px;
+
+  width: 50px;
+  cursor: pointer;
+
+  transition: transform 1.2s ease-in-out;
+}
+
+.bottom-ball.move {
+  transform: translateX(1000px) rotate(720deg);
+}
+
+/* ============================= */
+/* Username Badge */
+/* ============================= */
+.badge {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+
+  background: red;
+  color: white;
+  padding: 3px 8px;
+
+  border-radius: 10px;
+  font-size: 12px;
+
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0.4; }
+}
+
+/* ============================= */
+/* Background Effects */
+/* ============================= */
+.bg img {
+  animation: shine 3s infinite;
+}
+
+@keyframes shine {
+  0% { filter: brightness(1); }
+  50% { filter: brightness(1.4); }
+  100% { filter: brightness(1); }
+}
+
+/* ============================= */
+/* Legend Overlay */
+/* ============================= */
+.legend-overlay {
+  position: fixed;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+
+  opacity: 0;
+  z-index: 0;
+  pointer-events: none;
+
+  filter: brightness(0.6) contrast(1.1);
+  transition: opacity 0.8s ease;
+}
+
+.legend-overlay.show {
+  opacity: 0.3;
+}
+
+/* ============================= */
+/* 🏆 Leaderboard Button */
+/* ============================= */
+.leaderboard-btn {
+  position: fixed;
+  top: 80px;
+  left: 20px;
+
+  width: 90px;
+  height: 140px;
+
+  border-radius: 12px;
+
+  background: linear-gradient(145deg, #d50000, #ff1744);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  color: white;
+  font-weight: bold;
+  text-align: center;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 20px 40px rgba(0,0,0,0.8),
+    inset 0 0 10px rgba(255,255,255,0.2),
+    0 0 25px rgba(255,0,0,0.8);
+
+  z-index: 20;
+  transition: all 0.3s ease;
+}
+
+/* hover */
+.leaderboard-btn:hover {
+  transform: translateY(-10px) rotate(-3deg);
+}
+
+/* ============================= */
+/* History Button */
+/* ============================= */
+.history-btn {
+  position: fixed;
+  top: 160px;
+  left: 10px;
+
+  width: 90px;
+  height: 140px;
+
+  border-radius: 12px;
+
+  background: linear-gradient(145deg, #ffd600, #ffea00);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  color: white;
+  font-weight: bold;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 20px 40px rgba(0,0,0,0.8),
+    inset 0 0 10px rgba(255,255,255,0.2),
+    0 0 20px rgba(255,215,0,0.7);
+
+  z-index: 10;
+  transition: all 0.3s ease;
+}
+
+.history-btn:hover {
+  transform: translateY(10px) rotate(2deg);
+}
+
+/* text styles */
+.icon {
+  font-size: 24px;
+  margin-bottom: 6px;
+}
+
+.red-text,
+.yellow-text {
+  font-size: 8px;
+  letter-spacing: 1px;
+}
+
+/* ============================= */
+/* Match Scroll Container */
+/* ============================= */
+.match-container {
+  max-height: 700px;
+  overflow-y: auto;
+  padding-right: 2px;
+}
+
+/* scrollbar */
+.match-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.match-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.match-container::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, gold, #c9a400);
+  border-radius: 10px;
+}
+
+.match-container::-webkit-scrollbar-thumb:hover {
+  background: #ffd700;
+}
+
+.admin-btn {
+  position: fixed;
+  top: 30px;
+  right: 20px;
+
+  background: gold;
+  color: black;
+  font-weight: bold;
+
+  padding: 10px 20px;
+  border-radius: 20px;
+
+  cursor: pointer;
+}
+
+.admin-modal {
+  position: fixed;
+  inset: 0;
+  background: red; /* ← temporarily */
+  z-index: 9999;
+}
+

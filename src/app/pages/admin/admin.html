@@ -1,0 +1,44 @@
+<div class="admin-container">
+
+  <h2>Pending Matches</h2>
+
+  <div *ngIf="pendingMatches().length === 0">
+    <p>No pending matches ✅</p>
+  </div>
+
+  <!-- Match List -->
+  <div 
+    class="match-card"
+    *ngFor="let m of pendingMatches()"
+  >
+
+    <!-- Team Names -->
+    <h3>{{ m.teamA }} VS {{ m.teamB }}</h3>
+
+    <!-- Score Inputs -->
+    <div class="score-section">
+
+      <input 
+        type="number"
+        [(ngModel)]="m.teamAScore"
+        placeholder="Team A Score"
+      >
+
+      <span class="vs">-</span>
+
+      <input 
+        type="number"
+        [(ngModel)]="m.teamBScore"
+        placeholder="Team B Score"
+      >
+
+    </div>
+
+    <!-- Submit Button -->
+    <button (click)="submitResult(m)">
+      Submit Result
+    </button>
+
+  </div>
+
+</div>

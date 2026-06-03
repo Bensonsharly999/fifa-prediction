@@ -1,0 +1,91 @@
+<div class="bg">
+
+  <!-- Username -->
+  <span class="badge" *ngIf="username()">
+    {{ username() }}
+  </span>
+
+  <!-- Yellow Card (History) -->
+  <button class="history-btn" (click)="goToHistory()">
+    <div class="card-text yellow-text">HISTORY</div>
+  </button>
+
+  <!--  Red Card (Leaderboard) -->
+  <button class="leaderboard-btn" (click)="goToLeaderboard()">
+    <div class="icon">🏆</div>
+    <div class="card-text red-text">TOP SCORER</div>
+  </button>
+
+  <!-- Background animation -->
+  <img 
+    src="assets/legends.jpg" 
+    class="legend-overlay"
+    [class.show]="showLegend"
+  >
+
+  <!-- Moving football -->
+  <img 
+    src="assets/football.png"
+    class="bottom-ball"
+    [class.move]="ballMoved"
+    (click)="startAnimation()"
+  >
+
+  <!-- Players -->
+  <img src="assets/ronaldo.png" class="player-left">
+  <img src="assets/messi.png" class="player-right">
+
+  <!-- Title -->
+  <h1 class="title">
+    <span 
+      class="ball"
+      [class.animate]="ballMoved"
+      (click)="startAnimation()"
+    ></span>
+    FIFA 2026 Matches
+  </h1>
+
+  <!-- Matches list -->
+  <div class="match-container" *ngIf="matches().length > 0">
+
+    <!-- Match Card -->
+    <div 
+      class="card"
+      *ngFor="let m of matches()"
+      (click)="openMatch(m.matchId)"
+    >
+
+      <!-- Team A -->
+      <div class="team">
+        <img [src]="m.teamAFlag">
+        <h3>{{ m.teamA }}</h3>
+      </div>
+
+      <!-- Center Section -->
+      <div class="center-section">
+        <div class="vs">VS</div>
+        <div class="time">
+          {{ m.matchTime}}
+        </div>
+      </div>
+
+      <!-- Team B -->
+      <div class="team">
+        <img [src]="m.teamBFlag">
+        <h3>{{ m.teamB }}</h3>
+      </div>
+
+    </div>
+
+  </div>
+
+ <button
+  *ngIf="isAdminUser()" 
+  (click)="openAdmin()"
+  class="admin-btn"
+>
+  ADMIN
+</button>
+
+
+</div>
