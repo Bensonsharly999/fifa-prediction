@@ -29,6 +29,11 @@ jobs:
         run: npm ci
       - name: Build application
         run: npm run build
+      - name: Prepare for deployment
+        run: |
+          if [ -f "dist/fifa-bet-app/browser/index.csr.html" ]; then
+            mv "dist/fifa-bet-app/browser/index.csr.html" "dist/fifa-bet-app/browser/index.html"
+          fi
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
@@ -37,7 +42,7 @@ jobs:
           action: "upload"
           app_location: "/"
           api_location: ""
-          output_location: "dist"
+          output_location: "dist/fifa-bet-app/browser"
           skip_deploy_on_missing_secrets: true
 
   close_pull_request_job:

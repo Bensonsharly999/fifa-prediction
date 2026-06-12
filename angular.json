@@ -26,11 +26,11 @@
                 "input": "public"
               }
             ],
-            "styles": ["src/material-theme.scss", "src/styles.css"],
-            "outputMode": "static"
+            "styles": ["src/material-theme.scss", "src/styles.css"]
           },
           "configurations": {
-            "production": {             
+            "production": {
+              "outputMode": "static",             
               "fileReplacements": [
                   {
                     "replace": "src/environments/environment.ts",
