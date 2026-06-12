@@ -34,13 +34,15 @@ export class Leaderboard implements OnInit {
         // Format API response
         const formatted = res.map((m: any) => ({
           id: m.id,
+          name: m.email
+          .split('@')[0]
+          .replace('.', ' ')
+          .replace(/\b\w/g, (c: string) => c.toUpperCase()),
           points: m.score
         }));
 
         // Update signal state
         this.leaderboard.set(formatted);
-
-        console.log('Leaderboard:', this.leaderboard());
       },
 
       // Error handling

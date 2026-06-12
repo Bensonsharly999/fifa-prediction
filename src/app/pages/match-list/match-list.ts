@@ -1,10 +1,9 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Api } from '../../services/api';
 import { CommonModule } from '@angular/common';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { map, switchMap } from 'rxjs';
-import { Admin } from '../admin/admin';
+import { MatDialog } from '@angular/material/dialog';
+import { AuthPopup } from '../auth-popup/auth-popup';
 
 @Component({
   selector: 'app-match-list',
@@ -13,60 +12,126 @@ import { Admin } from '../admin/admin';
   templateUrl: './match-list.html',
   styleUrl: './match-list.css',
 })
-export class MatchList {
+export class MatchList implements OnInit {
 
-  // Inject services
+  // ✅ Inject services
   private api = inject(Api);
   private router = inject(Router);
+  private popup = inject(MatDialog);
 
-  showAdminDialog = signal(false);
+  // ✅ Signals
+  username = signal<string>('Guest');
+  matches = signal<any[]>([]);
   isAdminUser = signal(false);
 
-  // Username signal
-  username = signal<string>('Guest');
+  // ✅ Page load → open login
+  // ngOnInit() {
+  //   debugger;
+  //   const savedUser = localStorage.getItem('empId'); 
+  //   if (!savedUser) {
+  //   this.openAuthPopup();
+  //   }
+  // }
+  ngOnInit() {
+    const empId = localStorage.getItem('empId');
+    // const loginTime = localStorage.getItem('loginTime');
 
-  // Matches signal (auto reactive)
-  matches = toSignal(
-    this.api.getUser().pipe(
+    // const now = new Date().getTime();
 
-      // Get username first
-      switchMap((res: any) => {
-        this.username.set(res.split('\\')[1]);
+    // // ✅ 1 hour session (3600000 ms)
+    // const sessionLimit = 60 * 60 * 1000;
 
-        
-// Call admin check
-      this.api.isAdmin(Number(this.username())).subscribe(isAdmin => {
-        debugger;
+    // if (empId && loginTime && (now - Number(loginTime)) < sessionLimit) {
+   if(empId){
+      // ✅ Valid session
+      this.afterLogin(empId);
+
+    } else {
+
+      // ✅ Session expired
+      localStorage.removeItem('empId');
+      localStorage.removeItem('loginTime');
+
+      this.openAuthPopup();
+    }
+  } 
+
+
+afterLogin(employeeId: string) {
+
+  this.username.set(employeeId);
+
+  // ✅ Admin check
+  this.api.isAdmin(Number(employeeId)).subscribe(isAdmin => {
+    this.isAdminUser.set(isAdmin);
+  });
+
+  // ✅ Load matches
+  this.loadMatches();
+}
+
+
+
+  // ✅ Open login dialog
+  openAuthPopup() {
+    this.popup.open(AuthPopup, {
+      width: '320px',
+      disableClose: true
+    }).afterClosed().subscribe((employeeId) => {
+      if (!employeeId) return;
+      // ✅ Set username
+      this.username.set(employeeId);
+      localStorage.setItem('empId', employeeId);
+
+      // ✅ Check admin
+      this.api.isAdmin(Number(employeeId)).subscribe(isAdmin => {
         this.isAdminUser.set(isAdmin);
       });
 
-        // Then fetch matches
-        return this.api.getMatches();
-      }),
+      // ✅ Load matches
+      this.loadMatches();
+    });
+  }
 
-      // Transform match data
-      map((res: any[]) =>
-        res.map((m: any) => ({
-          ...m,
+  // ✅ Load matches
+  loadMatches() {
+    this.api.getMatches().subscribe((res: any[]) => {
+      
+      const formatted = res.map((m: any) => {
 
-          // Fix flag paths
-          teamAFlag: '/' + m.teamAFlag,
-          teamBFlag: '/' + m.teamBFlag,
+          return {
+            ...m,
+            teamAFlag: '/' + m.teamAFlag,
+            teamBFlag: '/' + m.teamBFlag,
+            matchTime: m.matchTime   // ✅ FIXED
+          };
+        });
 
-          // Keep match time
-          matchTime: m.matchTime
-        }))
-      )
-    ),
-    { initialValue: [] }
-  );
+      this.matches.set(formatted);
+    });
+  }
 
-  // Animation states
+  // ✅ UI actions
+  goToLeaderboard() {
+    this.router.navigate(['/leaderboard']);
+  }
+
+  goToHistory() {
+    this.router.navigate(['/history', this.username()]);
+  }
+
+  openMatch(id: number) {
+    this.router.navigate(['/match', id, this.username()]);
+  }
+
+  openAdmin() {
+    this.router.navigate(['/scoreupdate']);
+  }
+
+  // ✅ Animation (unchanged)
   ballMoved = false;
   showLegend = false;
-  dialog: any;
 
-  // Start animation
   startAnimation() {
     this.ballMoved = true;
     this.showLegend = true;
@@ -76,30 +141,25 @@ export class MatchList {
       this.showLegend = false;
     }, 5000);
   }
-
-  // Navigate to leaderboard
-  goToLeaderboard() {
-    this.router.navigate(['/leaderboard']);
-  }
-
-  // Navigate to history
-  goToHistory() {
-    this.router.navigate(['/history', this.username()]);
-  }
-
-  // Open match page
-  openMatch(id: number) {
-    this.router.navigate(['/match', id, this.username()]);
-  }
-    
-  openAdmin() {
-    this.router.navigate(['/scoreupdate']);
   
-  }
+logout() {
+  // clear session / token
+  localStorage.clear();
 
-  closeAdmin() {
-    this.showAdminDialog.set(false);
-  }
+  // redirect to login page
+  
+  this.router.navigate(['']).then(() => {
+      window.location.reload();   // ✅ refresh after redirect
+    });
+}
+canPredict(matchTime: string): boolean {
+  const now = new Date().getTime();
+  const match = new Date(matchTime).getTime();
+
+  const next2Hours = now + (2 * 60 * 60 * 1000);
+
+  return !(match >= now && match <= next2Hours);
+}
 
 
 }

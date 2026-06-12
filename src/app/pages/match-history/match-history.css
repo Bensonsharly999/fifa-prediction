@@ -36,7 +36,7 @@
 
   margin-top: 40px;
   margin-bottom: 30px;
-
+  font-family: ui-serif;
   color: white;
 
   text-shadow:
@@ -57,7 +57,7 @@
 
   border-radius: 15px;
   overflow: hidden;
-
+  font-family: ui-serif;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
 
   border-collapse: collapse;
@@ -193,4 +193,9 @@ td span {
 
 .table-container::-webkit-scrollbar-thumb:hover {
   background: #ffd700;
+}
+@media (max-width: 768px) {
+  .back-img {
+    width: 70px;
+  }
 }

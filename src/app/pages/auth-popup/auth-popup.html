@@ -1,0 +1,83 @@
+<!-- 
+<div class="popup-overlay">
+  <div class="popup-card">
+    <div *ngIf="step() === 'check'">
+      <h3>Enter Employee ID</h3>
+
+      <input
+        type="text"
+        placeholder="Employee ID"
+        [ngModel]="employeeId()"
+        (ngModelChange)="employeeId.set($event)"
+      />
+
+      <button class="btn" (click)="checkEmployee()">Continue</button>
+    </div>
+
+    <div *ngIf="step() === 'login'">
+      <h3>Enter Password</h3>
+
+      <input
+        type="password"
+        placeholder="Password"
+        [ngModel]="password()"
+        (ngModelChange)="password.set($event)"
+      />
+
+      <button (click)="login()">Login</button>
+    </div>
+
+<div *ngIf="step() === 'register'" class="form-section">
+  <h3>Register</h3>
+
+  <input type="text" placeholder="Email (@thoughtfocus.com)"
+    [ngModel]="email()" (ngModelChange)="email.set($event)" />
+
+  <input type="password" placeholder="Password"
+    [ngModel]="password()" (ngModelChange)="password.set($event)" />
+
+  <input type="password" placeholder="Confirm Password"
+    [ngModel]="confirmPassword()" (ngModelChange)="confirmPassword.set($event)" />
+
+  <div class="btn-group">
+    <button (click)="register()">Register</button>
+  </div>
+
+    </div>
+
+    <p class="error" *ngIf="error()">{{ error() }}</p>
+
+  </div>
+</div> -->
+
+<div class="popup-overlay">
+  <div class="popup-card">
+
+    <h3>Login</h3>
+
+    <!-- Email -->
+    <input
+      type="email"
+      placeholder="Email (@thoughtfocus.com)"
+      [ngModel]="email()"
+      (ngModelChange)="email.set($event)"
+      style="margin-bottom: 15px;"
+    />
+
+    <!-- Password -->
+    <input
+      type="password"
+      placeholder="Password"
+      [ngModel]="password()"
+      (ngModelChange)="password.set($event)"
+      style="margin-bottom: 15px;"
+    />
+
+    <!-- Login Button -->
+    <button class="btn" (click)="login()">Login</button>
+
+    <!-- Error Message -->
+    <p class="error" *ngIf="error()">{{ error() }}</p>
+
+  </div>
+</div>

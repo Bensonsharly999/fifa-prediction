@@ -1,47 +1,46 @@
 <div class="match-bg" *ngIf="match() as m">
 
-  <!-- Back Button -->
+  <!-- ✅ Back Button -->
   <img 
     src="assets/boot_back.png"
     class="back-img"
     (click)="goToBack()"
   />
 
-  <!-- ============================= -->
-  <!-- Teams Section -->
-  <!-- ============================= -->
+  <!-- ✅ Teams Section -->
   <div class="teams">
 
-    <!-- Trophy -->
-    <img src="assets/trophy2.png" class="trophy">
+    <!-- ✅ Trophy -->
+    <img 
+      src="assets/trophy2.png" 
+      class="trophy"
+    />
 
     <!-- ================= TEAM A ================= -->
-    <div class="team"
-         [class.active]="selectedTeam === 'A'">
+    <div 
+      class="team"
+      [class.active]="selectedTeam === 'A'"
+    >
 
-      <!-- Player Image + Flag -->
       <div class="flag-card">
 
-        <!-- Player / Legend Image -->
+        <!-- Player Image -->
         <img 
           [src]="m.playerA" 
           class="legend-img"
-        >
+        />
 
-        <!-- Team Flag -->
+        <!-- Flag -->
         <img 
           [src]="m.teamAFlag" 
           class="flag"
-          (click)="selectWinner()"
-        >
+        />
 
       </div>
 
-      <!-- Team Name -->
       <h3>{{ m.teamA }}</h3>
 
-      <!-- Score Input -->
-      <input 
+      <input
         type="number"
         [(ngModel)]="scoreA"
         class="score-box"
@@ -49,45 +48,39 @@
         max="20"
         [readonly]="goal"
 
-        (mouseup)="!goal && onMouseChange()"
-        (keydown)="disableTyping($event)"
-      >
+        (input)="!goal && onMouseChange()"
+       
+      />
 
     </div>
     <!-- ================= END TEAM A ================= -->
 
 
-    <!-- VS Separator -->
-    <div class="vs">VS</div>
-
-
     <!-- ================= TEAM B ================= -->
-    <div class="team"
-         [class.active]="selectedTeam === 'B'">
+    <div 
+      class="team"
+      [class.active]="selectedTeam === 'B'"
+    >
 
-      <!-- Player Image + Flag -->
       <div class="flag-card">
 
-        <!-- Player / Legend Image -->
+        <!-- Player Image -->
         <img 
           [src]="m.playerB" 
           class="legend-img"
-        >
+        />
 
-        <!-- Team Flag -->
+        <!-- Flag -->
         <img 
           [src]="m.teamBFlag" 
           class="flag"
-          (click)="!goal && selectWinner()"
-        >
+        />
 
       </div>
 
-      <!-- Team Name -->
       <h3>{{ m.teamB }}</h3>
 
-      <!-- Score Input -->
-      <input 
+      <input
         type="number"
         [(ngModel)]="scoreB"
         class="score-box"
@@ -95,30 +88,23 @@
         max="20"
         [readonly]="goal"
 
-        (mouseup)="!goal && onMouseChange()"
-        (keydown)="disableTyping($event)"
-      >
-
+        (input)="!goal && onMouseChange()"
+        
+      />
+<!-- (keydown)="disableTyping($event)" -->
     </div>
     <!-- ================= END TEAM B ================= -->
 
   </div>
 
-  <!-- ============================= -->
-  <!-- Message Section -->
-  <!-- ============================= -->
+  <!-- ✅ Message -->
   <p class="msg">{{ message }}</p>
 
-
-  <!-- ============================= -->
-  <!-- Goal Celebration Toast -->
-  <!-- ============================= -->
+  <!-- ✅ Goal Toast -->
   <div class="goal-toast" *ngIf="showGoalToast">
 
-    <!-- Referee Image -->
-    <img src="assets/ref1.png" class="referee-img">
+    <img src="assets/ref1.png" class="referee-img" />
 
-    <!-- Goal Message -->
     <div class="comment-box">
       <h4>⚽ GOOOAL!!!</h4>
       <p>{{ goalComment }}</p>
@@ -126,20 +112,20 @@
 
   </div>
 
-
-  <!-- ============================= -->
-  <!-- Final Goal / Result Message -->
-  <!-- ============================= -->
+  <!-- ✅ Final Result -->
   <div class="goal-toast" *ngIf="goal">
 
-    <!-- Referee Image -->
-    <img src="assets/ref2.png" class="referee-img">
+    <img src="assets/ref2.png" class="referee-img" />
 
-    <!-- Result Message -->
     <div class="comment-box">
       <p>{{ goalComment }}</p>
     </div>
 
   </div>
+  
+<div class="submit-ball" *ngIf="!goal" (click)="selectWinner()">
+  <img src="assets/fot_submit.png" alt="submit"  />
+</div>
+
 
 </div>

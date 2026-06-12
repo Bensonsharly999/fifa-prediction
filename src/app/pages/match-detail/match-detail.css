@@ -1,286 +1,372 @@
+/* ============================= */
+/* BACKGROUND */
+/* ============================= */
 .match-bg {
-  position: fixed;
-  inset: 0;
+  position: relative;
 
-  background: url('/assets/pred_bg.jpg') no-repeat center center;
-  background-size: cover;
-
+  height: 98svh;        /* ✅ FIX mobile height */
   width: 100%;
-  height: 100vh;
 
-  overflow: hidden;
-
-  text-align: center;
-  color: white;
-  perspective: 800px;
-  /* ✅ ADD THIS */
-  animation: crowdMove 8s ease-in-out infinite alternate;
-}
-@keyframes crowdMove {
-  0% {
-    background-position: 50% 50%;
-    background-size: 100%;
-  }
-  50% {
-    background-position: 52% 48%;
-    background-size: 105%;
-  }
-  100% {
-    background-position: 48% 52%;
-    background-size: 102%;
-  }
-}
-
-/* Blinking overlay (smooth) */
-.match-bg::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  animation: bgPulse 4s ease-in-out infinite;
-
-  pointer-events: none;
-}
-.match-bg::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  animation: crowdFlicker 2s infinite;
-  pointer-events: none;
-}
-@keyframes crowdFlicker {
-  0%   { opacity: 0.1; }
-  30%  { opacity: 0.25; }
-  60%  { opacity: 0.15; }
-  100% { opacity: 0.1; }
-}
-@keyframes bgPulse {
-  0%   { opacity: 0.25; }
-  50%  { opacity: 0.5; }
-  100% { opacity: 0.25; }
-}
-
-
-
-.teams {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
 
-  margin-top: 200px;  /* ✅ move down */
-  padding: 0 120px;   /* ✅ space from edges */
+  overflow-y: auto;
+
+  background: url('/assets/pred_bg.jpg') no-repeat center;
+  background-size: cover;
+  /* animation: crowdMove 8s ease-in-out infinite alternate; */
 }
 
+@keyframes crowdMove {
+  0%   { background-size: 100%; }
+  50%  { background-size: 105%; }
+  100% { background-size: 102%; }
+}
 
-/* Team Card */
+/* ============================= */
+/* TEAMS (FIXED GAP ISSUE) */
+/* ============================= */
+.teams {
+  display: flex;
+  justify-content: center;      /* ✅ FIX large gap */
+  align-items: center;
+  gap: 600px;                  /* ✅ controlled spacing */
+
+  margin-top: 180px;
+  padding: 0 40px;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .team {
-  text-align: center;
-  padding: 20px;
-  border-radius: 15px;
-  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
+  padding: 20px;
+  font-family: ui-serif;
   transition: 0.3s;
+
+  min-width: 200px;   /* ✅ balanced spacing */
 }
 
-/* Flag Style */
+/* ============================= */
+/* FLAG */
+/* ============================= */
 .flag {
-  width: 250px;
-  height: 175px;
-  transition: 0.4s;
+  width: clamp(90px, 25vw, 180px);
+  height: auto;
+  object-fit: contain;
+  transition: 0.3s;
 }
 
 .flag-card {
   position: relative;
-  padding: 18px;
-  border-radius: 20px;
-  backdrop-filter: blur(2px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px;
 }
 
+/* ============================= */
+/* LEGEND (ONLY DESKTOP) */
+/* ============================= */
 .legend-img {
   position: absolute;
-
   bottom: 100%;
   left: 50%;
-
   transform: translate(-50%, 20px);
 
-  width: 160px;
-
-  opacity: 0;   /* hidden initially */
+  width: 140px;
+  opacity: 0;
 
   pointer-events: none;
-
-  transition: all 0.3s ease;
-}
-
-.team:hover .legend-img {
-  opacity: 0.3;   /* ✅ THIS is the key (transparent) */
-  transform: translate(-50%, -10px);
-
-}
-
-.team:hover .flag-card {
-  transform: rotateY(10deg) rotateX(10deg) scale(1.05);
-}
-
-.team:hover .flag {
-  transform: translateZ(30px) scale(1.05);
-}
-
-.team.active .flag-card {
-  box-shadow:
-    0 0 30px gold,
-    0 20px 50px rgba(0,0,0,0.7);
-}
-
-.team.active .flag {
-  border: 2px solid gold;
-}
-
-
-/* Team Name */
-.team h3 {
-  margin: 5px 0 10px;
-  font-size: 18px;
-
-  text-shadow: 1px 1px 6px black;
-}
-
-/* VS */
-.vs {
-  font-size: 32px;
-  font-weight: bold;
-  text-shadow: 2px 2px 10px black;
-}
-
-/* Score Input */
-.score-box {
-  width: 70px;
-  height: 45px;
-
-  font-size: 22px;
-  text-align: center;
-
-  border-radius: 10px;
-  border: none;
-
-  outline: none;
-
-  background: rgba(0,0,0,0.6);
-  color: white;
-
-  box-shadow: 0 5px 10px rgba(0,0,0,0.4);
-
   transition: 0.3s;
 }
 
-/* Input Focus Effect */
-.score-box:focus {
+/* ✅ Hover ONLY desktop */
+@media (min-width: 769px) {
+  .team:hover .legend-img {
+    opacity: 0.3;
+    transform: translate(-50%, -10px);
+  }
+
+  .team:hover .flag {
+    transform: scale(1.05);
+  }
+}
+
+/* Active */
+.team.active .flag {
   border: 2px solid gold;
   box-shadow: 0 0 15px gold;
 }
 
-/* Validation Message */
-.msg {
-  margin-top: 50px;
-  font-weight: bold;
-  text-shadow: 1px 1px 6px black;
+/* ============================= */
+/* TEXT */
+/* ============================= */
+.team h3 {
+  margin: 8px 0;
+  font-size: 18px;
+  text-shadow: 1px 1px 5px black;
 }
 
+.vs {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+/* ============================= */
+/* SCORE */
+/* ============================= */
+.score-box {
+  width: 65px;
+  height: 40px;
+
+  font-size: 20px;
+  text-align: center;
+
+  border-radius: 8px;
+  border: none;
+
+  background: rgba(0,0,0,0.6);
+  color: white;
+}
+
+.score-box:focus {
+  border: 2px solid gold;
+}
+
+/* ============================= */
+/* TROPHY (FIXED VISIBILITY) */
+/* ============================= */
+.trophy {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  
+  width: clamp(300px, 40vw, 500px); /* ✅ responsive */
+  transform: translate(-50%, -50%);
+
+  opacity: 0.8;   /* ✅ visible now */
+  pointer-events: none;
+}
+
+/* ============================= */
+/* BACK BUTTON */
+/* ============================= */
 .back-img {
   position: fixed;
   top: 10px;
-  left: -10px;
-
-  width: 130px;
-
+  left: 0px;
+  width: 100px;
   cursor: pointer;
-
-  transform: perspective(800px) rotateY(0deg); /* ✅ slight 3D */
-
-  transition: 0.3s ease;
-
-  z-index: 10;
 }
 
-.back-img:hover {
-  transform: perspective(800px) rotateY(0deg) scale(1.1);
-}
-.back-btn{
-  position: fixed;
-  top: 50px;
-  left: 0;
-  padding: 12px 20px;
-
-  background: linear-gradient(135deg, gold, #ffd700);
-
-  color: black;
+/* ============================= */
+/* MESSAGE */
+/* ============================= */
+.msg {
+  margin-top: 80px;
   font-weight: bold;
-
-  border-radius: 0 12px 12px 0;
-
-  cursor: pointer;
-
-  box-shadow:
-    0 0 10px gold,
-    0 0 20px rgba(255, 215, 0, 0.6);
-
-  transition: all 0.3s ease;
-
-  z-index: 10;
+  font-family: ui-serif;
+  color: white;
 }
 
-/* TOAST STYLE (bigger popup) */
+/* ============================= */
+/* TOAST */
+/* ============================= */
 .goal-toast {
   position: fixed;
-  bottom: 40px;
-  right: 40px;
+  bottom: 30px;
+  right: 20px;
 
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 12px;
 
-  background: rgba(0,0,0,0.9);
-  padding: 25px 30px;   /* ✅ increased */
+  background: rgba(0,0,0,0.85);
+  padding: 15px 20px;
 
-  border-radius: 20px;
-
-  box-shadow: 0 0 30px gold; /* stronger glow */
-
-  animation: slideIn 0.5s ease;
-
-  z-index: 999;
+  border-radius: 12px;
+  box-shadow: 0 0 20px gold;
 }
 
-/* Referee Image - Bigger */
 .referee-img {
-  width: 150px;   /* ✅ increased from 60px */
-  height: auto;
-
-  animation: bounce 0.8s ease;
+  width: 80px;
 }
 
-/* Commentary box */
 .comment-box h4 {
   color: gold;
-  margin: 0;
-  font-size: 22px;   /* ✅ bigger title */
+  font-size: 18px;
+  font-family: ui-serif;
 }
 
 .comment-box p {
-  margin: 8px 0 0;
-  font-size: 18px;   /* ✅ bigger text */
+  font-size: 14px;
+  color: white;
+  font-family: ui-serif;
 }
-
-
-/* Animations */
-
-.trophy {
-  position: fixed;
-  top: 40%;
+/* ============================= */
+/* FOOTBALL SUBMIT BUTTON */
+/* ============================= */
+.submit-ball {
+  position: absolute;
+  top: 60%;          /* ✅ below trophy */
   left: 50%;
-  width: 700px;
-  transform: translate(-50%, -50%) rotateY(20deg);
-  filter: drop-shadow(0 30px 40px rgba(0,0,0,0.7));
+  transform: translate(-50%, -50%);
+
+  z-index: 5;
+  cursor: pointer;
+
+  border-radius: 50%;
+  padding: 0px;
+
+  /* ✅ overlay glow */
+  box-shadow:
+    0 0 2px rgba(255,255,255,0.6),
+    0 0 4px rgba(255,215,0,0.8),
+    0 0 6px rgba(255,215,0,0.6);
+
+  animation: pulseBall 3s infinite;
+}
+
+/* ball image */
+.submit-ball img {
+  width: 60px;
+  height: 60px;
+  transition: 0.3s;
+  z-index: 50;
+}
+
+/* hover effect */
+.submit-ball:hover img {
+  transform: scale(1.2) rotate(10deg);
+}
+
+/* pulse animation */
+@keyframes pulseBall {
+  0% {
+    box-shadow: 0 0 10px rgba(255,215,0,0.5);
+  }
+  50% {
+    box-shadow: 0 0 40px gold;
+  }
+  100% {
+    box-shadow: 0 0 10px rgba(255,215,0,0.5);
+  }
+}
+
+/* ============================= */
+/* ✅ MOBILE */
+/* ============================= */
+@media (max-width: 768px) {
+
+  
+  .match-bg {
+  overflow-y: auto;
+  padding-bottom: 40px;   /* ✅ prevents bottom cut */
+  }
+
+  .teams {
+    flex-direction: column;
+    gap: 30px;
+    padding: 0 15px;
+    margin-top: 100px;
+  }
+
+  .team {
+    width: 100%;
+    padding: 10px;
+  }
+
+  /* ✅ smaller flags */
+  .flag {
+    width: clamp(80px, 30vw, 130px);
+  }
+
+  /* ✅ REMOVE overlay on mobile */
+  .legend-img {
+    display: none !important;
+  }
+
+  /* ✅ disable hover */
+  .team:hover .flag {
+    transform: none;
+  }
+
+  .team h3 {
+    font-size: 14px;
+  }
+
+  .vs {
+    font-size: 18px;
+  }
+
+  .score-box {
+    width: 45px;
+    height: 30px;
+    font-size: 14px;
+  }
+
+  .trophy {
+    width: 160px;
+    top: 40%;
+    opacity: 0.25;
+  }
+
+  .back-img {
+    width: 70px;
+    top: 10px;
+    left: 2px;
+  }
+
+  .goal-toast {
+    width: 40%;
+    left: 5%;
+    right: auto;
+    bottom: 10px;
+  }
+.comment-box h4 {
+  color: gold;
+  font-size: 10px;
+  font-family: ui-serif;
+}
+
+.comment-box p {
+  font-size: 10px;
+  color: white;
+  font-family: ui-serif;
+}
+
+.submit-ball {
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  z-index: 5;
+  cursor: pointer;
+
+  border-radius: 50%;
+  padding: 0px;
+
+  /* ✅ softer glow */
+  box-shadow:
+    0 0 1px rgba(255,255,255,0.4),
+    0 0 2px rgba(255,215,0,0.4),
+    0 0 4px rgba(255,215,0,0.3);
+
+  animation: pulseBall 3s infinite;
 }
 
 
+/* ✅ reduce ball size */
+.submit-ball img {
+  width: 40px;
+  height: 40px;
+}
+
+}

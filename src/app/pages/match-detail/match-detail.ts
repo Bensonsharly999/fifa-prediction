@@ -182,5 +182,12 @@ export class MatchDetail implements OnInit {
   disableTyping(event: KeyboardEvent) {
     event.preventDefault(); // block manual typing
   }
+  
+  submitPrediction() {
+    console.log('Prediction submitted');
+
+    // your logic here
+  }
+
 
 }

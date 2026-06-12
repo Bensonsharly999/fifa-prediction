@@ -38,7 +38,7 @@
   margin-bottom: 30px;
 
   color: white;
-
+  font-family: ui-serif;
   text-shadow:
     0 0 10px white,
     0 0 20px rgba(255, 215, 0, 0.7);
@@ -57,7 +57,7 @@
 
   border-radius: 15px;
   overflow: hidden;
-
+  font-family: ui-serif;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
 
   border-collapse: collapse;
@@ -100,16 +100,16 @@
 /* ============================= */
 /* Top 3 Styling */
 /* ============================= */
-.leaderboard-table tr:nth-child(2) td {
+.leaderboard-table tr:nth-child(1) td {
   color: gold;
   font-weight: bold;
 }
 
-.leaderboard-table tr:nth-child(3) td {
+.leaderboard-table tr:nth-child(2) td {
   color: silver;
 }
 
-.leaderboard-table tr:nth-child(4) td {
+.leaderboard-table tr:nth-child(3) td {
   color: #cd7f32;
 }
 
@@ -193,4 +193,10 @@ td span {
 
 .table-container::-webkit-scrollbar-thumb:hover {
   background: #ffd700;
+}
+
+@media (max-width: 768px) {
+  .back-img {
+    width: 70px;
+  }
 }
