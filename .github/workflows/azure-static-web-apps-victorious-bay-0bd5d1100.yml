@@ -41,7 +41,7 @@ jobs:
         id: idtoken
         with:
            script: |
-                const core = require('@actions/core')
+                const core2 = require('@actions/core')
                 const token = await core.getIDToken()
                 core.setOutput('result', token)
            result-encoding: string
